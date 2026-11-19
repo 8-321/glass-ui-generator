@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://8-321.github.io/glass-ui-generator/sitemap.xml
