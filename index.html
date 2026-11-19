@@ -2,6 +2,8 @@
 <html lang="en" data-theme="ink">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Glass UI Generator — free glassmorphism CSS generator</title>
 <style>
@@ -15,7 +17,7 @@ header .sp{flex:1}
 header a{color:#6ea8ff;text-decoration:none;font-size:12.5px;border-bottom:1px solid rgba(110,168,255,.32)}
 
 .app{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start}
-@media(max-width:900px){.app{grid-template-columns:1fr}}
+@media(max-width:900px){.app{grid-template-columns:1fr}.stage{order:-1}}
 
 .card{background:#11141c;border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 24px rgba(0,0,0,.35)}
 .pad{padding:16px}
@@ -53,7 +55,7 @@ input[type=color]{width:34px;height:26px;border:0;border-radius:7px;background:n
 textarea{width:100%;height:54px;resize:vertical;border:0;border-radius:9px;padding:9px 10px;background:#0c0f16;color:#cfd6e6;
   font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;box-shadow:inset 0 0 0 1px #202632}
 
-.stage{position:relative;border-radius:16px;overflow:hidden;min-height:420px;display:grid;place-items:center;
+.stage{position:relative;border-radius:16px;overflow:hidden;min-height:420px;align-self:stretch;display:grid;place-items:center;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 24px rgba(0,0,0,.35)}
 .wall{position:absolute;inset:0;background:#0d1017;transition:background .4s}
 .wall i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55}
@@ -68,15 +70,15 @@ textarea{width:100%;height:54px;resize:vertical;border:0;border-radius:9px;paddi
 .stage.light .wall i:nth-child(1){background:#c9b48a;opacity:.4}
 .stage.light .wall i:nth-child(2){background:#e0c6a4;opacity:.4}
 .stage.light .wall i:nth-child(3){background:#b9c2a9;opacity:.4}
-.scene{position:relative;z-index:2;display:grid;place-items:center;padding:34px;width:100%}
+.scene{position:relative;z-index:2;display:grid;place-items:center;padding:clamp(16px,4.5vw,34px);width:100%}
 .gridwall{position:absolute;inset:0;opacity:0;transition:opacity .35s;
   background:conic-gradient(from 90deg at 50% 50%,#1b2a4a 0 25%,#7a3350 0 50%,#1d5a52 0 75%,#8a5b28 0);
   background-size:44px 44px}
 .typewall{position:absolute;inset:-12%;display:flex;flex-direction:column;justify-content:center;gap:14px;
   opacity:0;transition:opacity .35s;pointer-events:none;overflow:hidden}
 .typewall span{font:650 clamp(26px,4.6vw,58px)/1 Inter,system-ui,sans-serif;letter-spacing:-.02em;
-  color:#fff;opacity:.30;white-space:nowrap;transform:rotate(-7deg)}
-.typewall span:nth-child(even){transform:rotate(7deg);margin-left:34%;color:#8fb3ff;opacity:.38}
+  color:#fff;opacity:.42;white-space:nowrap;transform:rotate(-7deg)}
+.typewall span:nth-child(even){transform:rotate(7deg);margin-left:34%;color:#8fb3ff;opacity:.48}
 .stage[data-bg="type"] .typewall{opacity:1}
 .stage[data-bg="type"] .wall i{opacity:.26}
 .stage[data-bg="grid"] .gridwall{opacity:1}
@@ -97,14 +99,14 @@ textarea{width:100%;height:54px;resize:vertical;border:0;border-radius:9px;paddi
   --g-edge-dark:rgba(0,0,0,.20);
 }
 [data-theme="ink"]{
-  --g-bg-panel:rgba(18,24,38,.62); --g-bg-card:rgba(255,255,255,.055); --g-bg-hover:rgba(255,255,255,.10);
+  --g-bg-panel:rgba(18,24,38,.45); --g-bg-card:rgba(255,255,255,.055); --g-bg-hover:rgba(255,255,255,.10);
   --g-bg-input:rgba(255,255,255,.06); --g-text:#eef2fb; --g-text-2:rgba(238,242,251,.72); --g-text-3:rgba(238,242,251,.45);
   --g-accent:#6ea8ff; --g-accent-soft:rgba(110,168,255,.35); --g-on-accent:#0b0f18; --g-line:rgba(255,255,255,.07);
   --g-halo:rgba(110,168,255,.30); --g-shadow:0 24px 60px rgba(0,0,0,.50); --g-sheen:rgba(255,255,255,.55);
   --g-menu-bg:rgba(20,27,42,.965); --g-menu-text:#e8eefc; --g-menu-hover:rgba(110,168,255,.16);
 }
 [data-theme="paper"]{
-  --g-bg-panel:rgba(247,241,228,.80); --g-bg-card:rgba(255,255,255,.55); --g-bg-hover:rgba(176,122,60,.10);
+  --g-bg-panel:rgba(247,241,228,.66); --g-bg-card:rgba(255,255,255,.55); --g-bg-hover:rgba(176,122,60,.10);
   --g-bg-input:rgba(255,255,255,.62); --g-text:#3b332a; --g-text-2:rgba(59,51,42,.74); --g-text-3:rgba(59,51,42,.46);
   --g-accent:#b07a3c; --g-accent-soft:rgba(176,122,60,.28); --g-on-accent:#fff8ec; --g-line:rgba(59,51,42,.10);
   --g-halo:rgba(176,122,60,.26); --g-shadow:0 24px 60px rgba(90,66,36,.22); --g-sheen:rgba(255,255,255,.85);
@@ -112,7 +114,7 @@ textarea{width:100%;height:54px;resize:vertical;border:0;border-radius:9px;paddi
   --g-shadow-mark:0 10px 24px rgba(90,66,36,.18); --g-shadow-mark-hover:0 16px 32px rgba(90,66,36,.22); --g-edge-dark:rgba(59,51,42,.14);
 }
 [data-theme="cinnabar"]{
-  --g-bg-panel:rgba(46,20,18,.64); --g-bg-card:rgba(255,255,255,.06); --g-bg-hover:rgba(226,98,74,.14);
+  --g-bg-panel:rgba(46,20,18,.47); --g-bg-card:rgba(255,255,255,.06); --g-bg-hover:rgba(226,98,74,.14);
   --g-bg-input:rgba(255,255,255,.07); --g-text:#fbeeea; --g-text-2:rgba(251,238,234,.72); --g-text-3:rgba(251,238,234,.44);
   --g-accent:#e2624a; --g-accent-soft:rgba(226,98,74,.34); --g-on-accent:#2b0d0a; --g-line:rgba(255,255,255,.08);
   --g-halo:rgba(226,98,74,.32); --g-shadow:0 24px 60px rgba(30,8,6,.55); --g-sheen:rgba(255,214,200,.55);
@@ -120,14 +122,14 @@ textarea{width:100%;height:54px;resize:vertical;border:0;border-radius:9px;paddi
   --g-shadow-mark:0 10px 24px rgba(20,4,3,.50); --g-shadow-mark-hover:0 16px 32px rgba(20,4,3,.55); --g-edge-dark:rgba(0,0,0,.24);
 }
 [data-theme="celadon"]{
-  --g-bg-panel:rgba(16,32,30,.64); --g-bg-card:rgba(255,255,255,.055); --g-bg-hover:rgba(79,209,181,.12);
+  --g-bg-panel:rgba(16,32,30,.47); --g-bg-card:rgba(255,255,255,.055); --g-bg-hover:rgba(79,209,181,.12);
   --g-bg-input:rgba(255,255,255,.06); --g-text:#e6f5f1; --g-text-2:rgba(230,245,241,.72); --g-text-3:rgba(230,245,241,.44);
   --g-accent:#4fd1b5; --g-accent-soft:rgba(79,209,181,.30); --g-on-accent:#06201c; --g-line:rgba(255,255,255,.07);
   --g-halo:rgba(79,209,181,.28); --g-shadow:0 24px 60px rgba(0,0,0,.50); --g-sheen:rgba(210,255,246,.50);
   --g-menu-bg:rgba(17,35,32,.975); --g-menu-text:#e6f5f1; --g-menu-hover:rgba(79,209,181,.18);
 }
 [data-theme="midnight"]{
-  --g-bg-panel:rgba(12,12,14,.74); --g-bg-card:rgba(255,255,255,.045); --g-bg-hover:rgba(255,255,255,.09);
+  --g-bg-panel:rgba(12,12,14,.58); --g-bg-card:rgba(255,255,255,.045); --g-bg-hover:rgba(255,255,255,.09);
   --g-bg-input:rgba(255,255,255,.05); --g-text:#e9e9ec; --g-text-2:rgba(233,233,236,.68); --g-text-3:rgba(233,233,236,.40);
   --g-accent:#d8d8dc; --g-accent-soft:rgba(216,216,220,.22); --g-on-accent:#101012; --g-line:rgba(255,255,255,.06);
   --g-halo:rgba(255,255,255,.16); --g-shadow:0 26px 70px rgba(0,0,0,.72); --g-sheen:rgba(255,255,255,.60);
@@ -152,7 +154,7 @@ textarea{width:100%;height:54px;resize:vertical;border:0;border-radius:9px;paddi
   50%{box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow-mark-hover),0 0 0 var(--g-breathe-spread) transparent}}
 @keyframes g-sheen{0%{left:-140%}55%{left:150%}100%{left:150%}}
 
-.g-panel{width:352px;max-height:470px;display:flex;flex-direction:column;overflow:hidden;border-radius:var(--g-radius-lg);color:var(--g-text);
+.g-panel{width:min(352px,100%);max-height:470px;display:flex;flex-direction:column;overflow:hidden;border-radius:var(--g-radius-lg);color:var(--g-text);
   background:radial-gradient(120% 120% at 24% 12%,var(--g-sheen),transparent 52%),var(--g-bg-panel);
   backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));-webkit-backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));
   box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow)}
@@ -180,7 +182,7 @@ textarea{width:100%;height:54px;resize:vertical;border:0;border-radius:9px;paddi
   box-shadow:inset 0 0 0 1.5px var(--g-text-2)}
 .g-di[aria-current="page"]::before{box-shadow:inset 0 0 0 1.5px var(--g-accent)}
 
-.g-modal{width:380px;padding:22px;border-radius:var(--g-radius-lg);color:var(--g-text);
+.g-modal{width:min(380px,100%);padding:22px;border-radius:var(--g-radius-lg);color:var(--g-text);
   background:radial-gradient(120% 120% at 24% 12%,var(--g-sheen),transparent 52%),var(--g-bg-panel);
   backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));-webkit-backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));
   box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow)}
@@ -229,6 +231,10 @@ pre{margin:0;padding:16px;overflow:auto;max-height:320px;font:12px/1.65 ui-monos
 .rule-grid div{font-size:12.5px;color:#9aa3b8;padding:10px 12px;border-radius:10px;background:#11141c;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
 .rule-grid b{color:#6ea8ff;margin-right:8px;font-variant-numeric:tabular-nums}
 
+.chip:focus-visible,.sw:focus-visible,.copy:focus-visible,.btn:focus-visible,input:focus-visible,textarea:focus-visible,
+header a:focus-visible,#mailLink:focus-visible,.g-mark:focus-visible,.g-tab:focus-visible{outline:2px solid #6ea8ff;outline-offset:2px}
+.trust{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#6f7688;margin-top:6px}
+.trust i{width:6px;height:6px;border-radius:50%;background:#4fd1b5;box-shadow:0 0 8px rgba(79,209,181,.5)}
 </style>
 
 <meta name="description" content="Free glassmorphism CSS generator for desktop apps. Pick a mark, panel, dock, modal or menu; tune radius, blur, saturation and breathing; copy production CSS. No login, no build step.">
@@ -244,7 +250,7 @@ pre{margin:0;padding:16px;overflow:auto;max-height:320px;font:12px/1.65 ui-monos
   <header>
     <div>
       <h1>Glass UI Generator</h1>
-      <p>Pick a surface, tune the physics, copy the CSS. No login, no build step.</p>
+      <p>Pick a surface, tune the physics, copy the CSS. No login, no build step.<span class="trust"><i></i>Runs entirely in your browser — nothing is uploaded</span></p>
     </div>
     <div class="sp"></div>
     <a href="#" id="reset">Reset</a>
@@ -274,7 +280,7 @@ pre{margin:0;padding:16px;overflow:auto;max-height:320px;font:12px/1.65 ui-monos
           <button class="sw sw-celadon" data-v="celadon" title="celadon" aria-label="celadon" aria-pressed="false"></button>
           <button class="sw sw-midnight" data-v="midnight" title="midnight" aria-label="midnight" aria-pressed="false"></button>
         </div>
-        <div id="themeName" style="margin-top:12px;font-size:11.5px;color:#8d94a8">ink</div>
+        <div id="themeName" style="margin-top:18px;font-size:11.5px;color:#8d94a8">ink</div>
       </div>
 
       <div class="group" style="margin-top:26px">
@@ -340,12 +346,12 @@ pre{margin:0;padding:16px;overflow:auto;max-height:320px;font:12px/1.65 ui-monos
     <div class="card pad">
       <h3>The whole kit</h3>
       <p>Five themes, all seven components, the keyboard-menu spec and the Electron notes (transparent window, always-on-top, magnetic edge snapping).</p>
-      <a class="btn" href="https://capafy.ai/zh/agent/%E9%9D%A2%E4%B9%A6%E7%AD%BE-ui-%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83-desktopbookmark-ui-spec/5041863667" target="_blank" rel="noopener">Get the kit — US$9.99</a>
+      <a class="btn" href="https://capafy.ai/zh/agent/%E9%9D%A2%E4%B9%A6%E7%AD%BE-ui-%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83-desktopbookmark-ui-spec/5041863667" target="_blank" rel="noopener noreferrer">Get the kit — US$9.99</a>
     </div>
     <div class="card pad">
       <h3>Need the last 20% shipped?</h3>
       <p>Wiring it into Electron, fixing backdrop-filter jank, getting a build you can hand to users — that is the part tutorials skip. That part I do.</p>
-      <a class="btn ghost" href="mailto:3413765721@qq.com?subject=Glass%20UI%20-%20finish%20my%20app">Email me</a>
+      <a class="btn ghost" id="mailLink" href="#" rel="nofollow">Email me</a>
     </div>
   </section>
 
@@ -385,7 +391,7 @@ pre{margin:0;padding:16px;overflow:auto;max-height:320px;font:12px/1.65 ui-monos
     return 0.2126*r[0]+0.7152*r[1]+0.0722*r[2];
   }
 
-  function esc(s){ return s.replace(/[&<>]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
 
   var MARKUP = {
     mark: function(t){ return '<button class="g-mark" aria-label="Open"><span class="g-glyph"><i></i></span></button>'; },
@@ -413,7 +419,7 @@ pre{margin:0;padding:16px;overflow:auto;max-height:320px;font:12px/1.65 ui-monos
       '</div>';
     },
     card: function(){
-      return '<div style="display:flex;flex-direction:column;gap:10px;width:300px">'+
+      return '<div style="display:flex;flex-direction:column;gap:10px;width:min(300px,100%)">'+
         ["inset sheen + a darker bottom edge","lifts 2px on hover","dividers are box-shadow"].map(function(r,i){
           return '<div class="g-card">'+r+'<div class="m"><span class="tagpill">'+(i?"component":"rule")+'</span><span>0'+(9+i)+':0'+(i+1)+'</span></div></div>';
         }).join("")+'</div>';
@@ -428,13 +434,13 @@ pre{margin:0;padding:16px;overflow:auto;max-height:320px;font:12px/1.65 ui-monos
   };
 
   var CSS_SNIP = {
-    mark: '.g-mark{\n  width:56px; height:56px; border-radius:18px;\n  backdrop-filter: blur(14px) saturate(150%);\n  animation: g-breathe 4.6s ease-in-out infinite;\n}\n.g-mark::after{ /* sheen stops at 55% */ }',
-    panel: '.g-panel{\n  width:352px; border-radius:var(--g-radius-lg);\n  backdrop-filter: blur(22px) saturate(150%);\n  box-shadow: inset 0 1px 0 var(--g-sheen), var(--g-shadow);\n}',
-    dock: '.g-dock{\n  display:flex; gap:8px; padding:8px;\n  backdrop-filter: blur(22px) saturate(150%);\n  border-radius: var(--g-radius-lg);\n}',
-    modal: '.g-modal{\n  width:min(520px,90vw); padding:22px;\n  backdrop-filter: blur(22px) saturate(150%);\n  box-shadow: inset 0 1px 0 var(--g-sheen), var(--g-shadow);\n}',
+    mark: '.g-mark{\n  width:56px; height:56px; border-radius:var(--g-radius-lg);\n  backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));\n  animation: g-breathe var(--g-breathe) ease-in-out infinite;\n}\n.g-mark::after{ /* sheen stops at 55% */ }',
+    panel: '.g-panel{\n  width:352px; border-radius:var(--g-radius-lg);\n  backdrop-filter: blur(var(--g-blur-panel)) saturate(var(--g-sat));\n  box-shadow: inset 0 1px 0 var(--g-sheen), var(--g-shadow);\n}',
+    dock: '.g-dock{\n  display:flex; gap:8px; padding:8px;\n  backdrop-filter: blur(var(--g-blur-panel)) saturate(var(--g-sat));\n  border-radius: var(--g-radius-lg);\n}',
+    modal: '.g-modal{\n  width:min(520px,90vw); padding:22px;\n  backdrop-filter: blur(var(--g-blur-panel)) saturate(var(--g-sat));\n  box-shadow: inset 0 1px 0 var(--g-sheen), var(--g-shadow);\n}',
     card: '.g-card{\n  padding:12px 14px;\n  background: var(--g-bg-card);\n  box-shadow: inset 0 1px 0 var(--g-sheen), inset 0 -1px 0 var(--g-line);\n}',
-    toast: '.g-toast{\n  padding:10px 14px;\n  background: var(--g-menu-bg);\n  backdrop-filter: blur(22px) saturate(150%);\n}',
-    menu: '.g-menu{\n  padding:5px;\n  background: var(--g-menu-bg);\n  backdrop-filter: blur(24px) saturate(170%);\n}'
+    toast: '.g-toast{\n  padding:10px 14px;\n  background: var(--g-menu-bg);\n  backdrop-filter: blur(var(--g-blur-panel)) saturate(var(--g-sat));\n}',
+    menu: '.g-menu{\n  padding:5px;\n  background: var(--g-menu-bg);\n  backdrop-filter: blur(var(--g-blur-panel)) saturate(var(--g-sat));\n}'
   };
 
   function accentOf(){ return C.accent || THEME_ACCENT[C.theme]; }
@@ -562,6 +568,12 @@ CSS_SNIP[C.surface]+"\n\n"+
     $("#stage").classList.toggle("no-glass", on);
   });
 
+  (function(){
+    var user = ["3413","7657","21"].join("");
+    var host = ["qq","com"].join(".");
+    var a = document.getElementById("mailLink");
+    if (a) a.href = "mailto:" + user + "@" + host + "?subject=" + encodeURIComponent("Glass UI - finish my app");
+  })();
   $("#accent").value = THEME_ACCENT.ink;
   apply();
   window.__genReady = true;
@@ -569,6 +581,7 @@ CSS_SNIP[C.surface]+"\n\n"+
 </script>
 </body>
 </html>
+
 
 
 
