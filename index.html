@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en" data-theme="ink">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glass UI Generator — free glassmorphism CSS generator</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#0a0c11;color:#e8ecf6;font:14px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding:26px 22px 60px}
+header{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+h1{font-size:20px;font-weight:650;letter-spacing:-.01em}
+header p{color:#8d94a8;font-size:12.5px}
+header .sp{flex:1}
+header a{color:#6ea8ff;text-decoration:none;font-size:12.5px;border-bottom:1px solid rgba(110,168,255,.32)}
+
+.app{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
+
+.card{background:#11141c;border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 24px rgba(0,0,0,.35)}
+.pad{padding:16px}
+
+h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6f7688;margin:0 0 10px}
+.group{margin-bottom:18px}
+.group:last-child{margin-bottom:0}
+
+.themes{display:flex;gap:8px}
+.sw{width:30px;height:30px;border:0;border-radius:9px;cursor:pointer;position:relative;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 0 1px rgba(255,255,255,.12);transition:transform .16s}
+.sw:hover{transform:translateY(-2px)}
+.sw[aria-pressed="true"]{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 0 2px #e8ecf6}
+.sw-ink{background:linear-gradient(150deg,#6ea8ff,#1b2740)}
+.sw-paper{background:linear-gradient(150deg,#f7efdd,#b07a3c)}
+.sw-cinnabar{background:linear-gradient(150deg,#e2624a,#3b1512)}
+.sw-celadon{background:linear-gradient(150deg,#4fd1b5,#0f2622)}
+.sw-midnight{background:linear-gradient(150deg,#e9e9ec,#111)}
+.sw[aria-pressed="true"]::after{content:"";position:absolute;left:50%;bottom:-9px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#e8ecf6}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:0;border-radius:8px;padding:7px 10px;background:#1a1f2b;color:#9aa3b8;font-size:12px;cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);transition:background .16s,color .16s}
+.chip:hover{background:#232a38;color:#e8ecf6}
+.chip[aria-pressed="true"]{background:#2b3550;color:#fff;box-shadow:inset 0 0 0 1px rgba(110,168,255,.5)}
+
+.row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.row label{flex:1;font-size:12px;color:#9aa3b8}
+.row output{width:56px;text-align:right;font-size:11.5px;color:#6ea8ff;font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;width:120px;height:3px;border-radius:2px;background:#2a3142;outline:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#6ea8ff;cursor:pointer;
+  box-shadow:0 0 0 3px rgba(110,168,255,.18)}
+input[type=color]{width:34px;height:26px;border:0;border-radius:7px;background:none;padding:0;cursor:pointer}
+
+textarea{width:100%;height:54px;resize:vertical;border:0;border-radius:9px;padding:9px 10px;background:#0c0f16;color:#cfd6e6;
+  font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;box-shadow:inset 0 0 0 1px #202632}
+
+.stage{position:relative;border-radius:16px;overflow:hidden;min-height:420px;display:grid;place-items:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 24px rgba(0,0,0,.35)}
+.wall{position:absolute;inset:0;background:#0d1017;transition:background .4s}
+.wall i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55}
+.wall i:nth-child(1){width:420px;height:420px;left:-80px;top:-100px;background:#2f4a8f}
+.wall i:nth-child(2){width:360px;height:360px;right:-60px;top:80px;background:#7a3350}
+.wall i:nth-child(3){width:460px;height:460px;left:32%;bottom:-220px;background:#1d5a52}
+.stage.light .wall{background:#ece2ce}
+.stage.light .wall i:nth-child(1){background:#c9b48a;opacity:.4}
+.stage.light .wall i:nth-child(2){background:#e0c6a4;opacity:.4}
+.stage.light .wall i:nth-child(3){background:#b9c2a9;opacity:.4}
+.scene{position:relative;z-index:2;display:grid;place-items:center;padding:34px;width:100%}
+
+/* ---------- generated glass CSS (same as the kit) ---------- */
+:root{
+  --g-radius-lg:22px; --g-radius-md:14px; --g-radius-sm:10px; --g-mark:56px;
+  --g-blur:14px; --g-blur-panel:22px; --g-sat:150%; --g-sheen-angle:16deg;
+  --g-breathe:4.6s; --g-breathe-spread:12px;
+  --g-ease:cubic-bezier(.16,.84,.32,1); --g-fast:.18s; --g-slow:.36s;
+  --g-font-ui:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --g-font-cn:"LXGW WenKai","STKaiti","KaiTi","Songti SC",serif;
+  --g-shadow-mark:0 10px 24px rgba(0,0,0,.38);
+  --g-shadow-mark-hover:0 16px 32px rgba(0,0,0,.42);
+  --g-edge-dark:rgba(0,0,0,.20);
+}
+[data-theme="ink"]{
+  --g-bg-panel:rgba(18,24,38,.62); --g-bg-card:rgba(255,255,255,.055); --g-bg-hover:rgba(255,255,255,.10);
+  --g-bg-input:rgba(255,255,255,.06); --g-text:#eef2fb; --g-text-2:rgba(238,242,251,.72); --g-text-3:rgba(238,242,251,.45);
+  --g-accent:#6ea8ff; --g-accent-soft:rgba(110,168,255,.35); --g-on-accent:#0b0f18; --g-line:rgba(255,255,255,.07);
+  --g-halo:rgba(110,168,255,.30); --g-shadow:0 24px 60px rgba(0,0,0,.50); --g-sheen:rgba(255,255,255,.55);
+  --g-menu-bg:rgba(20,27,42,.965); --g-menu-text:#e8eefc; --g-menu-hover:rgba(110,168,255,.16);
+}
+[data-theme="paper"]{
+  --g-bg-panel:rgba(247,241,228,.80); --g-bg-card:rgba(255,255,255,.55); --g-bg-hover:rgba(176,122,60,.10);
+  --g-bg-input:rgba(255,255,255,.62); --g-text:#3b332a; --g-text-2:rgba(59,51,42,.74); --g-text-3:rgba(59,51,42,.46);
+  --g-accent:#b07a3c; --g-accent-soft:rgba(176,122,60,.28); --g-on-accent:#fff8ec; --g-line:rgba(59,51,42,.10);
+  --g-halo:rgba(176,122,60,.26); --g-shadow:0 24px 60px rgba(90,66,36,.22); --g-sheen:rgba(255,255,255,.85);
+  --g-menu-bg:rgba(250,244,232,.985); --g-menu-text:#3b332a; --g-menu-hover:rgba(176,122,60,.14);
+  --g-shadow-mark:0 10px 24px rgba(90,66,36,.18); --g-shadow-mark-hover:0 16px 32px rgba(90,66,36,.22); --g-edge-dark:rgba(59,51,42,.14);
+}
+[data-theme="cinnabar"]{
+  --g-bg-panel:rgba(46,20,18,.64); --g-bg-card:rgba(255,255,255,.06); --g-bg-hover:rgba(226,98,74,.14);
+  --g-bg-input:rgba(255,255,255,.07); --g-text:#fbeeea; --g-text-2:rgba(251,238,234,.72); --g-text-3:rgba(251,238,234,.44);
+  --g-accent:#e2624a; --g-accent-soft:rgba(226,98,74,.34); --g-on-accent:#2b0d0a; --g-line:rgba(255,255,255,.08);
+  --g-halo:rgba(226,98,74,.32); --g-shadow:0 24px 60px rgba(30,8,6,.55); --g-sheen:rgba(255,214,200,.55);
+  --g-menu-bg:rgba(52,22,19,.975); --g-menu-text:#fbeeea; --g-menu-hover:rgba(226,98,74,.20);
+  --g-shadow-mark:0 10px 24px rgba(20,4,3,.50); --g-shadow-mark-hover:0 16px 32px rgba(20,4,3,.55); --g-edge-dark:rgba(0,0,0,.24);
+}
+[data-theme="celadon"]{
+  --g-bg-panel:rgba(16,32,30,.64); --g-bg-card:rgba(255,255,255,.055); --g-bg-hover:rgba(79,209,181,.12);
+  --g-bg-input:rgba(255,255,255,.06); --g-text:#e6f5f1; --g-text-2:rgba(230,245,241,.72); --g-text-3:rgba(230,245,241,.44);
+  --g-accent:#4fd1b5; --g-accent-soft:rgba(79,209,181,.30); --g-on-accent:#06201c; --g-line:rgba(255,255,255,.07);
+  --g-halo:rgba(79,209,181,.28); --g-shadow:0 24px 60px rgba(0,0,0,.50); --g-sheen:rgba(210,255,246,.50);
+  --g-menu-bg:rgba(17,35,32,.975); --g-menu-text:#e6f5f1; --g-menu-hover:rgba(79,209,181,.18);
+}
+[data-theme="midnight"]{
+  --g-bg-panel:rgba(12,12,14,.74); --g-bg-card:rgba(255,255,255,.045); --g-bg-hover:rgba(255,255,255,.09);
+  --g-bg-input:rgba(255,255,255,.05); --g-text:#e9e9ec; --g-text-2:rgba(233,233,236,.68); --g-text-3:rgba(233,233,236,.40);
+  --g-accent:#d8d8dc; --g-accent-soft:rgba(216,216,220,.22); --g-on-accent:#101012; --g-line:rgba(255,255,255,.06);
+  --g-halo:rgba(255,255,255,.16); --g-shadow:0 26px 70px rgba(0,0,0,.72); --g-sheen:rgba(255,255,255,.60);
+  --g-menu-bg:rgba(14,14,16,.985); --g-menu-text:#e9e9ec; --g-menu-hover:rgba(255,255,255,.09);
+  --g-shadow-mark:0 10px 24px rgba(0,0,0,.55); --g-shadow-mark-hover:0 16px 32px rgba(0,0,0,.60); --g-edge-dark:rgba(0,0,0,.28);
+}
+.g-mark{position:relative;width:var(--g-mark);height:var(--g-mark);padding:0;border:0;cursor:grab;border-radius:18px;overflow:hidden;
+  background:radial-gradient(120% 120% at 24% 12%,var(--g-sheen),transparent 52%),var(--g-bg-panel);
+  backdrop-filter:blur(var(--g-blur)) saturate(var(--g-sat));-webkit-backdrop-filter:blur(var(--g-blur)) saturate(var(--g-sat));
+  box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow-mark),0 0 0 0 var(--g-halo);
+  animation:g-breathe var(--g-breathe) ease-in-out infinite;transition:transform var(--g-slow) var(--g-ease)}
+.g-mark:hover{transform:translateY(-2px)}
+.g-mark::after{content:"";position:absolute;top:-60%;left:-140%;width:70%;height:260%;
+  background:linear-gradient(100deg,transparent,var(--g-sheen),transparent);transform:rotate(var(--g-sheen-angle));
+  filter:blur(6px);opacity:.55;animation:g-sheen var(--g-breathe) var(--g-ease) infinite;pointer-events:none}
+.g-mark .g-glyph{position:absolute;inset:0}
+.g-mark .g-glyph::before,.g-mark .g-glyph::after{content:"";position:absolute;left:50%;top:50%;width:20px;height:2px;margin:-1px 0 0 -10px;border-radius:2px;background:var(--g-text);opacity:.86}
+.g-mark .g-glyph::before{transform:translateY(-8px)}
+.g-mark .g-glyph i{position:absolute;left:50%;top:calc(50% + 8px);width:20px;height:2px;margin:-1px 0 0 -10px;border-radius:2px;background:var(--g-accent);box-shadow:0 0 10px var(--g-accent-soft)}
+@keyframes g-breathe{
+  0%,100%{box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow-mark),0 0 0 0 var(--g-halo)}
+  50%{box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow-mark-hover),0 0 0 var(--g-breathe-spread) transparent}}
+@keyframes g-sheen{0%{left:-140%}55%{left:150%}100%{left:150%}}
+
+.g-panel{width:352px;max-height:470px;display:flex;flex-direction:column;overflow:hidden;border-radius:var(--g-radius-lg);color:var(--g-text);
+  background:radial-gradient(120% 120% at 24% 12%,var(--g-sheen),transparent 52%),var(--g-bg-panel);
+  backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));-webkit-backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));
+  box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow)}
+.g-ph{display:flex;align-items:center;gap:8px;padding:14px 14px 10px;font-family:var(--g-font-cn);font-size:16px}
+.g-ph small{font-family:var(--g-font-ui);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--g-text-3);margin-left:auto}
+.g-tabs{display:flex;gap:4px;padding:0 12px 10px}
+.g-tab{flex:1;border:0;padding:7px 0;border-radius:9px;background:transparent;color:var(--g-text-3);font:11.5px var(--g-font-ui);cursor:pointer}
+.g-tab[aria-selected="true"]{background:var(--g-bg-card);color:var(--g-text);box-shadow:inset 0 1px 0 var(--g-sheen)}
+.g-list{flex:1;overflow:auto;padding:0 12px 10px;display:flex;flex-direction:column;gap:7px}
+.g-card{padding:10px 11px;border-radius:var(--g-radius-md);background:var(--g-bg-card);
+  box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-line);color:var(--g-text);font-size:12.5px}
+.g-card .m{display:flex;gap:6px;align-items:center;margin-top:6px;font-size:10.5px;color:var(--g-text-3)}
+.tagpill{padding:1px 6px;border-radius:5px;background:var(--g-accent-soft);color:var(--g-text);font-size:9.5px}
+.g-pf{display:flex;gap:8px;padding:9px 14px 12px;font-size:10.5px;color:var(--g-text-3);box-shadow:0 -1px 0 var(--g-line)}
+
+.g-dock{display:flex;align-items:center;gap:8px;padding:8px;border-radius:var(--g-radius-lg);color:var(--g-text);
+  background:radial-gradient(120% 120% at 24% 12%,var(--g-sheen),transparent 52%),var(--g-bg-panel);
+  backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));-webkit-backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));
+  box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow)}
+.g-di{width:42px;height:42px;border:0;border-radius:var(--g-radius-sm);background:transparent;cursor:pointer;position:relative;
+  transition:background var(--g-fast) var(--g-ease),transform var(--g-fast) var(--g-ease)}
+.g-di:hover{background:var(--g-bg-hover);transform:translateY(-2px)}
+.g-di[aria-current="page"]{background:var(--g-bg-card)}
+.g-di::before{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:4px;
+  box-shadow:inset 0 0 0 1.5px var(--g-text-2)}
+.g-di[aria-current="page"]::before{box-shadow:inset 0 0 0 1.5px var(--g-accent)}
+
+.g-modal{width:380px;padding:22px;border-radius:var(--g-radius-lg);color:var(--g-text);
+  background:radial-gradient(120% 120% at 24% 12%,var(--g-sheen),transparent 52%),var(--g-bg-panel);
+  backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));-webkit-backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));
+  box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 -1px 0 var(--g-edge-dark),var(--g-shadow)}
+.g-modal h3{font:500 16px var(--g-font-cn);margin-bottom:8px}
+.g-modal p{font-size:12.5px;color:var(--g-text-2);line-height:1.7}
+.g-acts{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.g-btn{border:0;border-radius:var(--g-radius-sm);padding:8px 14px;font:12px var(--g-font-ui);cursor:pointer;color:var(--g-text);
+  background:var(--g-bg-card);box-shadow:inset 0 1px 0 var(--g-sheen),inset 0 0 0 1px var(--g-line)}
+.g-btn.pri{background:var(--g-accent);color:var(--g-on-accent);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+
+.g-toast{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--g-radius-md);
+  background:var(--g-menu-bg);color:var(--g-menu-text);font-size:13px;
+  backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));-webkit-backdrop-filter:blur(var(--g-blur-panel)) saturate(var(--g-sat));
+  box-shadow:inset 0 1px 0 var(--g-sheen),var(--g-shadow)}
+.g-toast i{width:8px;height:8px;border-radius:50%;background:var(--g-accent);box-shadow:0 0 10px var(--g-accent-soft)}
+
+.g-menu{min-width:210px;padding:5px;border-radius:var(--g-radius-md);background:var(--g-menu-bg);color:var(--g-menu-text);
+  backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);
+  box-shadow:inset 0 1px 0 var(--g-sheen),var(--g-shadow)}
+.g-mi{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:12.5px;cursor:pointer}
+.g-mi[data-active="true"]{background:var(--g-menu-hover)}
+.g-mi .tick{width:12px;opacity:.9}
+.g-mi .cnt{margin-left:auto;font-size:10.5px;opacity:.5}
+
+/* ---------- code panel ---------- */
+.code{margin-top:18px}
+.chead{display:flex;align-items:center;gap:10px;padding:12px 16px;box-shadow:0 1px 0 rgba(255,255,255,.05)}
+.chead b{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#6f7688;font-weight:600}
+.chead .sp{flex:1}
+.copy{border:0;border-radius:8px;padding:7px 12px;background:#2b3550;color:#dfe6f5;font-size:12px;cursor:pointer}
+.copy:hover{background:#36426a}
+.copy.ok{background:#1f5c46;color:#b9f2da}
+pre{margin:0;padding:16px;overflow:auto;max-height:320px;font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;color:#b9c4da}
+
+
+.cta{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+@media(max-width:900px){.cta{grid-template-columns:1fr}}
+.cta h3{font-size:15px;margin-bottom:8px;font-weight:600}
+.cta p{font-size:12.5px;color:#8d94a8;line-height:1.75;margin-bottom:14px}
+.btn{display:inline-block;padding:9px 14px;border-radius:9px;background:#2b3550;color:#e8ecf6;text-decoration:none;font-size:12.5px}
+.btn:hover{background:#36426a}
+.btn.ghost{background:transparent;box-shadow:inset 0 0 0 1px #2b3550}
+.rules{margin-top:28px}
+.rules h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6f7688;margin-bottom:12px}
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px}
+.rule-grid div{font-size:12.5px;color:#9aa3b8;padding:10px 12px;border-radius:10px;background:#11141c;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.rule-grid b{color:#6ea8ff;margin-right:8px;font-variant-numeric:tabular-nums}
+
+</style>
+
+<meta name="description" content="Free glassmorphism CSS generator for desktop apps. Pick a mark, panel, dock, modal or menu; tune radius, blur, saturation and breathing; copy production CSS. No login, no build step.">
+<meta name="theme-color" content="#0a0c11">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Glass UI Generator — free glassmorphism CSS generator">
+<meta property="og:description" content="Seven surfaces, five themes, one CSS variable layer. Copy production glass CSS without the grey-box look.">
+<meta property="og:image" content="https://8-321.github.io/glass-ui-generator/preview.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Glass UI Generator</h1>
+      <p>Pick a surface, tune the physics, copy the CSS. No login, no build step.</p>
+    </div>
+    <div class="sp"></div>
+    <a href="#" id="reset">Reset</a>
+  </header>
+
+  <div class="app">
+    <aside class="card pad">
+      <div class="group">
+        <h2>Surface</h2>
+        <div class="chips" id="surfaces">
+          <button class="chip" data-v="mark" aria-pressed="false">Mark</button>
+          <button class="chip" data-v="panel" aria-pressed="true">Panel</button>
+          <button class="chip" data-v="dock" aria-pressed="false">Dock</button>
+          <button class="chip" data-v="modal" aria-pressed="false">Modal</button>
+          <button class="chip" data-v="card" aria-pressed="false">Card</button>
+          <button class="chip" data-v="toast" aria-pressed="false">Toast</button>
+          <button class="chip" data-v="menu" aria-pressed="false">Menu</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>Theme</h2>
+        <div class="themes" id="themes">
+          <button class="sw sw-ink" data-v="ink" title="ink" aria-label="ink" aria-pressed="true"></button>
+          <button class="sw sw-paper" data-v="paper" title="paper" aria-label="paper" aria-pressed="false"></button>
+          <button class="sw sw-cinnabar" data-v="cinnabar" title="cinnabar" aria-label="cinnabar" aria-pressed="false"></button>
+          <button class="sw sw-celadon" data-v="celadon" title="celadon" aria-label="celadon" aria-pressed="false"></button>
+          <button class="sw sw-midnight" data-v="midnight" title="midnight" aria-label="midnight" aria-pressed="false"></button>
+        </div>
+        <div id="themeName" style="margin-top:12px;font-size:11.5px;color:#8d94a8">ink</div>
+      </div>
+
+      <div class="group" style="margin-top:26px">
+        <h2>Accent</h2>
+        <div class="row">
+          <label for="accent">override accent</label>
+          <input type="color" id="accent" value="#6ea8ff">
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>Physics</h2>
+        <div class="row"><label for="radius">radius</label><input type="range" id="radius" min="8" max="30" step="1" value="22"><output id="o-radius">22px</output></div>
+        <div class="row"><label for="blur">blur</label><input type="range" id="blur" min="6" max="30" step="1" value="22"><output id="o-blur">22px</output></div>
+        <div class="row"><label for="sat">saturate</label><input type="range" id="sat" min="110" max="200" step="5" value="150"><output id="o-sat">150%</output></div>
+        <div class="row"><label for="breathe">breathe</label><input type="range" id="breathe" min="26" max="70" step="2" value="46"><output id="o-breathe">4.6s</output></div>
+      </div>
+
+      <div class="group">
+        <h2>Text</h2>
+        <textarea id="copy" spellcheck="false">Bookmarks</textarea>
+      </div>
+    </aside>
+
+    <section class="stage" id="stage">
+      <div class="wall"><i></i><i></i><i></i></div>
+      <div class="scene" id="scene" data-theme="ink"></div>
+    </section>
+  </div>
+
+  <div class="card code">
+    <div class="chead">
+      <b>output</b>
+      <span style="font-size:11.5px;color:#6f7688" id="hint">tokens + markup — paste straight into your project</span>
+      <div class="sp"></div>
+      <button class="copy" id="copyBtn">Copy</button>
+    </div>
+    <pre id="out"></pre>
+  </div>
+
+  <section class="cta">
+    <div class="card pad">
+      <h3>The whole kit</h3>
+      <p>Five themes, all seven components, the keyboard-menu spec and the Electron notes (transparent window, always-on-top, magnetic edge snapping).</p>
+      <a class="btn" href="https://capafy.ai/zh/agent/%E9%9D%A2%E4%B9%A6%E7%AD%BE-ui-%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83-desktopbookmark-ui-spec/5041863667" target="_blank" rel="noopener">Get the kit — US$9.99</a>
+    </div>
+    <div class="card pad">
+      <h3>Need the last 20% shipped?</h3>
+      <p>Wiring it into Electron, fixing backdrop-filter jank, getting a build you can hand to users — that is the part tutorials skip. That part I do.</p>
+      <a class="btn ghost" href="mailto:3413765721@qq.com?subject=Glass%20UI%20-%20finish%20my%20app">Email me</a>
+    </div>
+  </section>
+
+  <section class="rules">
+    <h2>What this generator refuses to do</h2>
+    <div class="rule-grid">
+      <div><b>01</b>No border on glass</div>
+      <div><b>02</b>Blur always ships with saturate()</div>
+      <div><b>03</b>The sheen stops at 55%</div>
+      <div><b>04</b>Breathe with spread, not colour</div>
+      <div><b>05</b>Dividers are shadows</div>
+      <div><b>06</b>Zero emoji</div>
+      <div><b>07</b>Never animate backdrop-filter</div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s){ return document.querySelector(s); };
+
+  var DEFAULTS = { surface:"panel", theme:"ink", accent:"", radius:22, blur:22, sat:150, breathe:46, text:"Bookmarks" };
+  var C = Object.assign({}, DEFAULTS);
+
+  var THEME_ACCENT = { ink:"#6ea8ff", paper:"#b07a3c", cinnabar:"#e2624a", celadon:"#4fd1b5", midnight:"#d8d8dc" };
+
+  function hexToRgb(h){
+    h = h.replace("#","");
+    if (h.length === 3) h = h.split("").map(function(c){return c+c;}).join("");
+    var n = parseInt(h,16);
+    return [ (n>>16)&255, (n>>8)&255, n&255 ];
+  }
+  function rgba(h,a){ var r=hexToRgb(h); return "rgba("+r[0]+","+r[1]+","+r[2]+","+a+")"; }
+  function luminance(h){
+    var r=hexToRgb(h).map(function(v){ v/=255; return v<=0.03928? v/12.92 : Math.pow((v+0.055)/1.055,2.4); });
+    return 0.2126*r[0]+0.7152*r[1]+0.0722*r[2];
+  }
+
+  function esc(s){ return s.replace(/[&<>]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
+
+  var MARKUP = {
+    mark: function(t){ return '<button class="g-mark" aria-label="Open"><span class="g-glyph"><i></i></span></button>'; },
+    panel: function(t){
+      var rows = ["Breathe the shadow to 4.6s","Keyboard-navigable category menu","Cards layered with an inset sheen"];
+      return '<div class="g-panel">'+
+        '<div class="g-ph">'+esc(t.split(" / ")[0]||"Bookmarks")+'<small>desktopbookmark</small></div>'+
+        '<div class="g-tabs"><button class="g-tab" aria-selected="true">To-do</button><button class="g-tab">Ideas</button><button class="g-tab">Notes</button><button class="g-tab">Timeline</button></div>'+
+        '<div class="g-list">'+rows.map(function(r,i){
+          return '<div class="g-card">'+r+'<div class="m"><span class="tagpill">'+(i===1?"dev":"design")+'</span><span>0'+(9+i)+':1'+i+'</span></div></div>';
+        }).join("")+'</div>'+
+        '<div class="g-pf">2 / 7 done<span style="margin-left:auto">↓↑ navigate</span></div>'+
+      '</div>';
+    },
+    dock: function(){
+      return '<nav class="g-dock" aria-label="Dock">'+[0,1,2,3,4].map(function(i){
+        return '<button class="g-di"'+(i===0?' aria-current="page"':'')+' aria-label="item '+(i+1)+'"></button>';
+      }).join("")+'</nav>';
+    },
+    modal: function(t){
+      return '<div class="g-modal" role="dialog" aria-modal="true">'+
+        '<h3>'+esc(t.split(" / ")[0]||"Confirm")+'</h3>'+
+        '<p>No border on the glass. A radial gradient is the highlight, inset shadows are the edges, and blur always ships with saturation.</p>'+
+        '<div class="g-acts"><button class="g-btn">Cancel</button><button class="g-btn pri">Confirm</button></div>'+
+      '</div>';
+    },
+    card: function(){
+      return '<div style="display:flex;flex-direction:column;gap:10px;width:300px">'+
+        ["inset sheen + a darker bottom edge","lifts 2px on hover","dividers are box-shadow"].map(function(r,i){
+          return '<div class="g-card">'+r+'<div class="m"><span class="tagpill">'+(i?"component":"rule")+'</span><span>0'+(9+i)+':0'+(i+1)+'</span></div></div>';
+        }).join("")+'</div>';
+    },
+    toast: function(){ return '<div class="g-toast"><i></i>Saved to disk</div>'; },
+    menu: function(){
+      var rows=[["All",12],["Design",4],["Dev",3],["Idea",3],["Research",2]];
+      return '<div class="g-menu" role="listbox">'+rows.map(function(r,i){
+        return '<div class="g-mi" data-active="'+(i===0?'true':'false')+'" aria-selected="'+(i===0?'true':'false')+'"><span class="tick">✓</span><span>'+r[0]+'</span><span class="cnt">'+r[1]+'</span></div>';
+      }).join("")+'</div>';
+    }
+  };
+
+  var CSS_SNIP = {
+    mark: '.g-mark{\n  width:56px; height:56px; border-radius:18px;\n  backdrop-filter: blur(14px) saturate(150%);\n  animation: g-breathe 4.6s ease-in-out infinite;\n}\n.g-mark::after{ /* sheen stops at 55% */ }',
+    panel: '.g-panel{\n  width:352px; border-radius:var(--g-radius-lg);\n  backdrop-filter: blur(22px) saturate(150%);\n  box-shadow: inset 0 1px 0 var(--g-sheen), var(--g-shadow);\n}',
+    dock: '.g-dock{\n  display:flex; gap:8px; padding:8px;\n  backdrop-filter: blur(22px) saturate(150%);\n  border-radius: var(--g-radius-lg);\n}',
+    modal: '.g-modal{\n  width:min(520px,90vw); padding:22px;\n  backdrop-filter: blur(22px) saturate(150%);\n  box-shadow: inset 0 1px 0 var(--g-sheen), var(--g-shadow);\n}',
+    card: '.g-card{\n  padding:12px 14px;\n  background: var(--g-bg-card);\n  box-shadow: inset 0 1px 0 var(--g-sheen), inset 0 -1px 0 var(--g-line);\n}',
+    toast: '.g-toast{\n  padding:10px 14px;\n  background: var(--g-menu-bg);\n  backdrop-filter: blur(22px) saturate(150%);\n}',
+    menu: '.g-menu{\n  padding:5px;\n  background: var(--g-menu-bg);\n  backdrop-filter: blur(24px) saturate(170%);\n}'
+  };
+
+  function accentOf(){ return C.accent || THEME_ACCENT[C.theme]; }
+
+  function apply(){
+    var accent = accentOf();
+    var scene = $("#scene");
+    scene.setAttribute("data-theme", C.theme);
+    scene.style.setProperty("--g-accent", accent);
+    scene.style.setProperty("--g-accent-soft", rgba(accent,.34));
+    scene.style.setProperty("--g-on-accent", luminance(accent) > 0.55 ? "#101012" : "#ffffff");
+    scene.style.setProperty("--g-radius-lg", C.radius+"px");
+    scene.style.setProperty("--g-radius-md", Math.max(8,C.radius-8)+"px");
+    scene.style.setProperty("--g-radius-sm", Math.max(6,C.radius-12)+"px");
+    scene.style.setProperty("--g-blur", Math.round(C.blur*0.64)+"px");
+    scene.style.setProperty("--g-blur-panel", C.blur+"px");
+    scene.style.setProperty("--g-sat", C.sat+"%");
+    scene.style.setProperty("--g-breathe", (C.breathe/10).toFixed(1)+"s");
+    $("#stage").classList.toggle("light", C.theme === "paper");
+
+    scene.innerHTML = MARKUP[C.surface](C.text);
+
+    var css =
+"/* ---------- tokens ---------- */\n"+
+":root[data-theme=\""+C.theme+"\"]{\n"+
+"  --g-accent:      "+accent+";\n"+
+"  --g-accent-soft: "+rgba(accent,.34)+";\n"+
+"  --g-on-accent:   "+(luminance(accent) > 0.55 ? "#101012" : "#ffffff")+";\n"+
+"  --g-radius-lg:   "+C.radius+"px;\n"+
+"  --g-radius-md:   "+Math.max(8,C.radius-8)+"px;\n"+
+"  --g-radius-sm:   "+Math.max(6,C.radius-12)+"px;\n"+
+"  --g-blur:        "+Math.round(C.blur*0.64)+"px;\n"+
+"  --g-blur-panel:  "+C.blur+"px;\n"+
+"  --g-sat:         "+C.sat+"%;\n"+
+"  --g-breathe:     "+(C.breathe/10).toFixed(1)+"s;\n"+
+"}\n\n"+
+"/* ---------- markup ---------- */\n"+
+'<div class="g-shell" data-theme="'+C.theme+'">\n  '+MARKUP[C.surface](C.text).replace(/></g,">\n  <")+"\n</div>\n\n"+
+"/* ---------- component ---------- */\n"+
+CSS_SNIP[C.surface]+"\n\n"+
+"/* 7 rules: no border · blur+saturate · sheen stops · spread not colour\n   · dividers are shadows · zero emoji · never animate blur */";
+
+    $("#out").textContent = css;
+    $("#hint").textContent = C.surface + " · " + C.theme + " · " + C.radius + "px radius";
+  }
+
+  function bindChips(sel, key, cast){
+    Array.prototype.forEach.call(document.querySelectorAll(sel+" [data-v]"), function(btn){
+      btn.addEventListener("click", function(){
+        Array.prototype.forEach.call(document.querySelectorAll(sel+" [data-v]"), function(b){ b.setAttribute("aria-pressed","false"); });
+        btn.setAttribute("aria-pressed","true");
+        C[key] = cast ? cast(btn.dataset.v) : btn.dataset.v;
+        if (key === "theme") { var tn = document.getElementById("themeName"); if (tn) tn.textContent = C.theme; var ai = document.getElementById("accent"); if (ai && !C.accent) ai.value = THEME_ACCENT[C.theme]; }
+        apply();
+      });
+    });
+  }
+
+  bindChips("#surfaces","surface");
+  bindChips("#themes","theme");
+
+  $("#accent").addEventListener("input", function(e){ C.accent = e.target.value; apply(); });
+
+  [["radius","radius","px"],["blur","blur","px"],["sat","sat","%"],["breathe","breathe",""]].forEach(function(t){
+    var el = $("#"+t[0]);
+    el.addEventListener("input", function(){
+      C[t[1]] = Number(el.value);
+      if (t[0] === "breathe") $("#o-breathe").textContent = (Number(el.value)/10).toFixed(1)+"s";
+      else $("#o-"+t[0]).textContent = el.value + t[2];
+      apply();
+    });
+  });
+
+  $("#copy").addEventListener("input", function(e){ C.text = e.target.value; apply(); });
+
+  $("#reset").addEventListener("click", function(e){
+    e.preventDefault();
+    C = Object.assign({}, DEFAULTS);
+    document.querySelectorAll(".chip[data-v],.sw[data-v]").forEach(function(b){
+      b.setAttribute("aria-pressed", String(b.dataset.v === (b.classList.contains("chip") ? C.surface : C.theme)));
+    });
+    $("#radius").value = C.radius; $("#o-radius").textContent = C.radius+"px";
+    $("#blur").value = C.blur;     $("#o-blur").textContent = C.blur+"px";
+    $("#sat").value = C.sat;       $("#o-sat").textContent = C.sat+"%";
+    $("#breathe").value = C.breathe; $("#o-breathe").textContent = "4.6s";
+    $("#accent").value = THEME_ACCENT[C.theme];
+    $("#copy").value = C.text;
+    apply();
+  });
+
+  $("#copyBtn").addEventListener("click", function(){
+    var text = $("#out").textContent;
+    var done = function(){
+      var b = $("#copyBtn");
+      b.textContent = "Copied"; b.classList.add("ok");
+      setTimeout(function(){ b.textContent = "Copy"; b.classList.remove("ok"); }, 1400);
+    };
+    if (navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(text).then(done).catch(fallback);
+    } else fallback();
+    function fallback(){
+      var ta = document.createElement("textarea");
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch(e){}
+      document.body.removeChild(ta);
+    }
+  });
+
+  $("#accent").value = THEME_ACCENT.ink;
+  apply();
+  window.__genReady = true;
+})();
+</script>
+</body>
+</html>
+
+
+
+
